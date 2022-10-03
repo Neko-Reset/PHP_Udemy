@@ -9,6 +9,22 @@ function validation( $request ) { //$_POST連想配列が入ってくる
     $errors[] = "氏名は必須です";
   }
 
+  // メールアドレスとurlはhtmlで検証が入っているのでtypeを変えないとここのバリデーションが動いてるか確認できない
+  // 簡易的なバリデーション
+  // filter_var( "検証したい値", オプション )
+  // !をつけて否定のコードにする
+
+  if ( empty( $request[ "email" ] ) || !filter_var( $request[ "email" ], FILTER_VALIDATE_EMAIL ) ) {
+    $errors[] = "メールアドレスは必須です。正しい形式で入力してください";
+  }
+
+  // ホームページの値が入っていたらの分岐にさらにifでフィルターをかける
+  if ( !empty( $request[ "url" ] ) ) {
+    if ( !filter_var( $request( "url" , FILTER_VALIDATE_URL ) ) ) {
+      $errors[] = "urlが正しくありません。正しい形式で入力してください。"
+    }
+  }
+
   // 年齢はチェックを押している仕様なのでissetで設定していなかったらの条件
   if ( isset( $request[ "gender" ] ) ) {
     $errors[] = "性別は必須です";
