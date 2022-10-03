@@ -6,6 +6,8 @@
 // 合言葉が残ってると良くないから最後の処理で消す
 session_start();
 
+require "validation.php";
+
 // サニタイズ クッリクジャッキング対策 (透明ボタンで他サイトに飛ばす行為)
 header( "X-FRAME-OPTIONS:DENY" );
 
@@ -60,7 +62,10 @@ function h( $str ) {
 
 $page_flag = 0;
 
-if ( !empty($_POST[ "btn_confirm" ] ) ) {
+// バリデーションの関数を変数に格納
+$errors = validation( $_POST );
+
+if ( !empty($_POST[ "btn_confirm" ] ) && empty( $errors ) ) {
   $page_flag = 1;
 }
 
@@ -92,6 +97,16 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
   $token = $_SESSION[ "csrf_token" ];
     ?>
 
+    <!-- 変数の中身と確認ボタンの中身があったらエラーを表示するようにする -->
+    <!-- 配列を表示するのでforeachを使う -->
+    <!-- liを使ってリストで表示 -->
+    <?php if ( !empty( $errors ) && !empty( $_POST[ "btn_confirm" ] )) : ?>
+      <?php echo "</ul>"; ?>
+        <?php foreach( $errors as $error ) : ?>
+          <?php echo "<li>" . $error . "</li>"; ?>
+        <?php endforeach ; ?>
+      <?php echo "</ul>"; ?>
+    <?php endif ; ?>
 
     <form method = "POST" action = "input.php">
       氏名
@@ -103,7 +118,47 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
       <!-- バリデーションがあるようなイメージ -->
       <input type = "email" name = "email" value = "<?php if ( !empty( $_POST[ "email" ] ) ) { echo h( $_POST[ "email" ] ); }?>">
       <br>
-      
+      ホームページ
+      <input type = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
+      <br>
+      性別
+      <!-- チェックボックスにチェックを入れておきたい場合 -->
+      <!-- 最後にcheckedをつける -->
+      <!-- <input type = "radio" name = "gender" value = "0" checked > -->
+      <!-- 保持をしたい場合、中身があるかの判定と===0を使う -->
+      <input type = "radio" name = "gender" value = "0" checked
+      <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "0" ) { echo "checked"; } ?>>男性
+      <input type = "radio" name = "gender" value = "1" 
+      <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "1" ) { echo "checked"; } ?>>女性
+      <br>
+      年齢
+      <!-- selectタグにチェックをしときたい場合 -->
+      <!-- 最後にselectedをつける -->
+      <!-- <option value = "1" selected>~19歳</option> -->
+      <select name = "age">
+        <option value = "">選択してください</option>
+        <option value = "1"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "1" ) { echo "selected"; }?>>~19歳</option>
+        <option value = "2"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "2" ) { echo "selected"; }?>>20~29</option>
+        <option value = "3"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "3" ) { echo "selected"; }?>>30~39</option>
+        <option value = "4"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "4" ) { echo "selected"; }?>>40~49</option>
+        <option value = "5"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "5" ) { echo "selected"; }?>>50~59</option>
+        <option value = "6"
+        <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "6" ) { echo "selected"; }?>>60~</option>
+      </select>
+      <br>
+      お問合せ内容
+      <br>
+      <textarea name = "contact">
+        <?php if ( !empty( $_POST[ "contact" ] ) ) { echo h( $_POST[ "contact" ] ); }?>
+      </textarea>
+      <br>
+      <input type = "checkbox" name = "caution" value = "1">注意事項のチェック
+      <br>
       <input type = "submit" name = "btn_confirm" value = "確認する">
       <!-- トークン確認コード -->
       <!-- <?php echo $token; ?> -->
@@ -118,7 +173,30 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
         氏名
         <?php echo h( $_POST[ "your_name" ] ); ?>
         <br>
+        メールアドレス
         <?php echo h( $_POST[ "email" ] ); ?>
+        <br>
+        ホームページ
+        <?php echo h( $_POST[ "url" ] )?>
+        <br>
+        <性別>
+          <?php
+          if ( $_POST[ "gender" ] === "0" ) { echo "男性"; }
+          if ( $_POST[ "gender" ] === "1" ) { echo "女性"; }
+          ?>
+        <br>
+        <年齢>
+          <?php
+          if ( $_POST[ "age" ] === "1" ) { echo "~19"; }
+          if ( $_POST[ "age" ] === "2" ) { echo "20~29"; }
+          if ( $_POST[ "age" ] === "3" )  { echo "30~39"; }
+          if ( $_POST[ "age" ] === "4" ) { echo "40~49"; }
+          if ( $_POST[ "age" ] === "5" ) { echo "50~59"; }
+          if ( $_POST[ "age" ] === "6" ) { echo "60"; }
+          ?>
+        <br>
+        お問合せ
+        <?php echo h( $_POST[ "contact" ] )?>
         <br>
         <input type = "submit" name = "back_submit" value = "戻る">
         <input type = "submit" name = "btn_submit" value = "送信する">
@@ -126,6 +204,11 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
         <!-- get,postは通信すると値を保持できないから保持するためのコードを書く必要がある-->
         <input type = "hidden" name = "your_name" value = "<?php echo h( $_POST[ "your_name" ] ); ?>">
         <input type = "hidden" name = "email" value = "<?php echo h( $_POST[ "email" ]); ?>">
+        <input type = "hidden" name = "url" value = "<?php echo h( $_POST[ "url" ]); ?>">
+        <input type = "hidden" name = "gender" value = "<?php echo h( $_POST[ "gender" ]); ?>">
+        <input type = "hidden" name = "age" value = "<?php echo h( $_POST[ "age" ]); ?>">
+        <input type = "hidden" name = "contact" value = "<?php echo h( $_POST[ "contact" ]); ?>">
+        <input type = "hidden" name = "gender" value = "<?php echo h( $_POST[ "gender" ]); ?>">
         <input type = "hidden" name = "csrf" value = "<?php echo h( $_POST[ "csrf" ]); ?>">
       </form>
     <?php endif; ?>
