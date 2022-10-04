@@ -194,9 +194,18 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
                   <?php if ( !empty( $_POST[ "contact" ] ) ) { echo h( $_POST[ "contact" ] ); }?>
                 </textarea>
               </div>
+
+              <!-- bootstrap -->
+              <!-- <div class="form-check">を作成 -->
+              <!-- inputに属性追加 -->
+              <!-- class = "form-check-input" id = "caution" -->
+              <!-- labelに属性追加 -->
+              <!-- class="form-check-label" for = "caution" -->
+              <div class="form-check">
+                <input type = "checkbox" name = "caution" class = "form-check-input" id = "caution" value = "1">
+                <label class="form-check-label" for = "caution">注意事項のチェック</label>
+              </div>
               
-              <input type = "checkbox" name = "caution" value = "1">注意事項のチェック
-              <br>
               <input type = "submit" name = "btn_confirm" value = "確認する">
               <!-- トークン確認コード -->
               <!-- <?php echo $token; ?> -->
