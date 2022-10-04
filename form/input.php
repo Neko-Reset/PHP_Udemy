@@ -123,23 +123,26 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
       <!-- inputにclass名,id名(forと名前が一緒でなければならない)をつける -->
       <!-- inputのクラス名はドキュメント通りじゃないとだめ -->
       <!-- requiredをinputの最後に入れると必須属性になる -->
-      <form method = "POST" action = "input.php">
-      <!-- container,row,col-md-6でinputの長さを調整している -->
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6">
+      <div class="container">
+        <div class="row">
+          <!-- container,row,col-md-6でinputの長さを調整している -->
+          <div class="col-md-6">
+            <form method = "POST" action = "input.php">
+              <!-- 氏名のdiv -->
               <div class = "from-group">
                 <label for = "your_name">氏名</label>
                 <!-- "戻る"をしたときに値を保持して出力したい場合 valueの中身がこうなる -->
                 <input type= "text" class = "form-control" id = "your_name" name= "your_name" value= "<?php if( !empty( $_POST[ 'your_name' ] ) ){ echo h( $_POST[ 'your_name' ] ); } ?>"required>
               </div>
+              <!-- emailのdiv -->
               <div class = "form-group">
                 <label for = "email">メール</label>
                 <!-- inputのtypeをemailにすると@が必要との判定をしてくれる -->
                 <!-- バリデーションがあるようなイメージ -->
                 <input type = "email" class = "form-control" id = "email" name = "email" value = "<?php if ( !empty( $_POST[ "email" ] ) ) { echo h( $_POST[ "email" ] ); }?>"required>
               </div>
-              <div class = "form-control">
+              <!-- ホームページのdiv -->
+              <div class = "form-group">
                 <label for="url">ホームページ</label>
                 <input type = "url" class = "form-control" id = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
               </div>
@@ -206,12 +209,17 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
                 <label class="form-check-label" for = "caution">注意事項のチェック</label>
               </div>
               
-              <input type = "submit" name = "btn_confirm" value = "確認する">
+              <!-- bootstrap -->
+              <!-- 属性つけると色が変わる -->
+              <!-- class = "btn btn-info" -->
+              <input type = "submit" name = "btn_confirm" class = "btn btn-info" value = "確認する">
               <!-- トークン確認コード -->
               <!-- <?php echo $token; ?> -->
               <input type = "hidden" name = "csrf" value = "<?php echo $token; ?>">
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     <?php endif; ?>
 
 
