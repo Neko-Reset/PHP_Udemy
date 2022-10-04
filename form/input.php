@@ -171,7 +171,7 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
         <!-- selectタグにチェックをしときたい場合 -->
         <!-- 最後にselectedをつける -->
         <!-- <option value = "1" selected>~19歳</option> -->
-        <select name = "age">
+        <select name = "age" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
           <option value = "">選択してください</option>
           <option value = "1"
           <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "1" ) { echo "selected"; }?>>~19歳</option>
