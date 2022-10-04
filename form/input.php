@@ -101,9 +101,9 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
       if (!isset( $_SESSION[ "csrf_token" ] ) ) {
         $csrf_token = bin2hex(random_bytes(32));
         $_SESSION[ "csrf_token" ] = $csrf_token;
-    }
+      }
 
-    $token = $_SESSION[ "csrf_token" ];
+      $token = $_SESSION[ "csrf_token" ];
       ?>
 
       <!-- 変数の中身と確認ボタンの中身があったらエラーを表示するようにする -->
@@ -124,25 +124,44 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
       <!-- inputのクラス名はドキュメント通りじゃないとだめ -->
       <!-- requiredをinputの最後に入れると必須属性になる -->
       <form method = "POST" action = "input.php">
-        <div class = "from_group">
-          <label for = "your_name">氏名</label>
-          <!-- "戻る"をしたときに値を保持して出力したい場合 valueの中身がこうなる -->
-          <input type= "text" class="form-control" id = "your_name" name= "your_name" value= "<?php if( !empty( $_POST[ 'your_name' ] ) ){ echo h( $_POST[ 'your_name' ] ); } ?>"required>
-        </div>
-        <br>
-        メール
-        <!-- inputのtypeをemailにすると@が必要との判定をしてくれる -->
-        <!-- バリデーションがあるようなイメージ -->
-        <input type = "email" name = "email" value = "<?php if ( !empty( $_POST[ "email" ] ) ) { echo h( $_POST[ "email" ] ); }?>">
-        <br>
-        ホームページ
-        <input type = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
-        <br>
-        性別
-        <!-- チェックボックスにチェックを入れておきたい場合 -->
-        <!-- 最後にcheckedをつける -->
-        <!-- <input type = "radio" name = "gender" value = "0" checked > -->
-        <!-- 保持をしたい場合、中身があるかの判定と===0を使う -->
+      <!-- container,row,col-md-6でinputの長さを調整している -->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class = "from-group">
+                <label for = "your_name">氏名</label>
+                <!-- "戻る"をしたときに値を保持して出力したい場合 valueの中身がこうなる -->
+                <input type= "text" class = "form-control" id = "your_name" name= "your_name" value= "<?php if( !empty( $_POST[ 'your_name' ] ) ){ echo h( $_POST[ 'your_name' ] ); } ?>"required>
+              </div>
+              <div class = "form-group">
+                <label for = "email">メール</label>
+                <!-- inputのtypeをemailにすると@が必要との判定をしてくれる -->
+                <!-- バリデーションがあるようなイメージ -->
+                <input type = "email" class = "form-control" id = "email" name = "email" value = "<?php if ( !empty( $_POST[ "email" ] ) ) { echo h( $_POST[ "email" ] ); }?>"required>
+              </div>
+              <div class = "form-control">
+                <label for="url">ホームページ</label>
+                <input type = "url" class = "form-control" id = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
+              </div>
+              
+              性別
+              <!-- チェックボックスにチェックを入れておきたい場合 -->
+              <!-- 最後にcheckedをつける -->
+              <!-- <input type = "radio" name = "gender" value = "0" checked > -->
+              <!-- 保持をしたい場合、中身があるかの判定と===0を使う -->
+              <!-- bootstrap -->
+              <!-- ラジオボタンの操作 -->
+              <!-- div class="form-check form-check-inline"を作る-->
+              <!-- inputにclass = "form-check-inline"追加 idも追加,今回はgender1-->
+              <!-- labelにclass = "form-check-label" for = "gender1"を追加 -->
+              <div class="form-check form-check-inline">
+                <input type = "radio" class = "form-check-inline" name = "gender" id = "gender1" value = "0" checked
+                <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "0" ) { echo "checked"; } ?>>
+                <label class = "form-check-label" for = "gender1">男性</label>
+                <input type = "radio" class = "form-check-inline" name = "gender" id = "gender2" value = "1" 
+                <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "1" ) { echo "checked"; } ?>>
+                <label class = "form-check-label" for = "gender2">女性</label>
+              </div>
         <input type = "radio" name = "gender" value = "0" checked
         <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "0" ) { echo "checked"; } ?>>男性
         <input type = "radio" name = "gender" value = "1" 
