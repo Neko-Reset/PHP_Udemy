@@ -162,43 +162,46 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
                 <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "1" ) { echo "checked"; } ?>>
                 <label class = "form-check-label" for = "gender2">女性</label>
               </div>
-        <input type = "radio" name = "gender" value = "0" checked
-        <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "0" ) { echo "checked"; } ?>>男性
-        <input type = "radio" name = "gender" value = "1" 
-        <?php if (!empty( $_POST[ "gender" ] ) && $_POST[ "gender" ] === "1" ) { echo "checked"; } ?>>女性
-        <br>
-        年齢
-        <!-- selectタグにチェックをしときたい場合 -->
-        <!-- 最後にselectedをつける -->
-        <!-- <option value = "1" selected>~19歳</option> -->
-        <select name = "age" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-          <option value = "">選択してください</option>
-          <option value = "1"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "1" ) { echo "selected"; }?>>~19歳</option>
-          <option value = "2"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "2" ) { echo "selected"; }?>>20~29</option>
-          <option value = "3"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "3" ) { echo "selected"; }?>>30~39</option>
-          <option value = "4"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "4" ) { echo "selected"; }?>>40~49</option>
-          <option value = "5"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "5" ) { echo "selected"; }?>>50~59</option>
-          <option value = "6"
-          <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "6" ) { echo "selected"; }?>>60~</option>
-        </select>
-        <br>
-        お問合せ内容
-        <br>
-        <textarea name = "contact">
-          <?php if ( !empty( $_POST[ "contact" ] ) ) { echo h( $_POST[ "contact" ] ); }?>
-        </textarea>
-        <br>
-        <input type = "checkbox" name = "caution" value = "1">注意事項のチェック
-        <br>
-        <input type = "submit" name = "btn_confirm" value = "確認する">
-        <!-- トークン確認コード -->
-        <!-- <?php echo $token; ?> -->
-        <input type = "hidden" name = "csrf" value = "<?php echo $token; ?>">
+              
+              <!-- selectタグにチェックをしときたい場合 -->
+              <!-- 最後にselectedをつける -->
+              <!-- <option value = "1" selected>~19歳</option> -->
+              <!-- bootstrap -->
+              <!-- selectタグに属性追加 class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" -->
+              <select name = "age" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <option value = "">選択してください</option>
+                <option value = "1"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "1" ) { echo "selected"; }?>>~19歳</option>
+                <option value = "2"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "2" ) { echo "selected"; }?>>20~29</option>
+                <option value = "3"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "3" ) { echo "selected"; }?>>30~39</option>
+                <option value = "4"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "4" ) { echo "selected"; }?>>40~49</option>
+                <option value = "5"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "5" ) { echo "selected"; }?>>50~59</option>
+                <option value = "6"
+                <?php if (!empty( $_POST[ "gender" ]) && $_POST[ "age" ] === "6" ) { echo "selected"; }?>>60~</option>
+              </select>
+              
+              <!-- bootstrap -->
+              <!-- <div class = "mb-3">作成 -->
+              <!-- labelタグにfor = "contact" class = "form-label"追加 -->
+              <!-- textareaに属性追加class="form-control" id="contact" rows="3" -->
+              <div class = "mb-3">
+                <label for = "contact" class = "form-label">お問合せ内容</label>
+                <textarea name = "contact" class="form-control" id="contact" rows="3">
+                  <?php if ( !empty( $_POST[ "contact" ] ) ) { echo h( $_POST[ "contact" ] ); }?>
+                </textarea>
+              </div>
+              
+              <input type = "checkbox" name = "caution" value = "1">注意事項のチェック
+              <br>
+              <input type = "submit" name = "btn_confirm" value = "確認する">
+              <!-- トークン確認コード -->
+              <!-- <?php echo $token; ?> -->
+              <input type = "hidden" name = "csrf" value = "<?php echo $token; ?>">
+        </div>
       </form>
     <?php endif; ?>
 
