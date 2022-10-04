@@ -381,6 +381,6 @@ function check_postal_code($postal_code) {
   }
 }
 
-check_postal_code($postal_code);
+// check_postal_code($postal_code);
 
 ?>

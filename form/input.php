@@ -143,8 +143,8 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
               </div>
               <!-- ホームページのdiv -->
               <div class = "form-group">
-                <label for="url">ホームページ</label>
-                <input type = "url" class = "form-control" id = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
+              <label for="url">ホームページ</label>
+              <input type = "url" class = "form-control" id = "url" name = "url" value = "<?php if ( !empty( $_POST[ "url" ] ) ) { echo h( $_POST[ "url" ] ); }?>">
               </div>
               
               性別
