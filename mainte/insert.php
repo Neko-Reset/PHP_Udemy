@@ -6,14 +6,14 @@ function insertContacts($request) {
 
     //入力 DB保存 prepare execute(配列(全て文字列))
     $params = [
-      "id" => null,
-      "name" => $request[ "your_name" ],
-      "email" => $request[ "email" ],
-      "url" => $request[ "url" ],
-      "gender" => $request[ "gender" ],
-      "age" => $request[ "age" ],
-      "contact" => $request[ "contact" ],
-      "created_at" => null //nullで自動で時間が入る
+    "id" => null,
+    "name" => $request[ "your_name" ],
+    "email" => $request[ "email" ],
+    "url" => $request[ "url" ],
+    "gender" => $request[ "gender" ],
+    "age" => $request[ "age" ],
+    "contact" => $request[ "contact" ],
+    "created_at" => null //nullで自動で時間が入る
     ];
 
     $count = 0;
