@@ -273,6 +273,9 @@ if ( !empty($_POST[ "btn_submit" ] ) ) {
 
     <?php if ( $page_flag === 2 ) : ?>
       <?php if ($_POST['csrf'] === $_SESSION['csrf_token']) : ?>
+      <?php require "/Applications/MAMP/htdocs/php_test/mainte/insert.php";
+      insertContacts( $_POST );
+      ?>
       送信完了
       <!-- トークン削除 -->
       <?php unset( $_SESSION[ "csrf_token" ] )?>
