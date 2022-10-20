@@ -21,6 +21,6 @@ function type_hinting( string $n ) {
 }
 
 // stringに配列を入れてるからエラー
-type_hinting([ "配列" ]);
+type_hinting([ "配列エラー" ]);
 
 ?>
