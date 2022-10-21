@@ -11,5 +11,7 @@
             "email": "94509379+DJ-phi@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "nesbot/carbon": "^2.62"
+    }
 }
