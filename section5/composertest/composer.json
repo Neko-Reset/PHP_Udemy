@@ -1,0 +1,15 @@
+{
+    "name": "phidongviet/composertest",
+    "autoload": {
+        "psr-4": {
+            "Phidongviet\\Composertest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DJ-phi",
+            "email": "94509379+DJ-phi@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
